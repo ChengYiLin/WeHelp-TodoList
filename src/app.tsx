@@ -1,8 +1,15 @@
 import { FC } from "react";
-import './style/main.css';
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
+
+import "./style/global.css";
 
 const App: FC = () => {
-    return <div className="text-red-500">Hello React 18</div>;
+    return (
+        <Layout>
+            <Home />
+        </Layout>
+    );
 };
 
 export default App;
