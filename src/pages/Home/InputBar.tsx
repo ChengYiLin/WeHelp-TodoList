@@ -1,15 +1,15 @@
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { FC, useState } from "react";
 import { MdAdd } from "react-icons/md";
 
 interface Props {
-    setTodoList: Dispatch<SetStateAction<string[]>>;
+    addItem: (item: string) => void;
 }
 
-const InputBar: FC<Props> = ({ setTodoList }) => {
+const InputBar: FC<Props> = ({ addItem }) => {
     const [inputText, setInputText] = useState("");
 
     const handleAddItem = () => {
-        setTodoList((prev) => [...prev, inputText]);
+        addItem(inputText);
         setInputText("");
     };
 
