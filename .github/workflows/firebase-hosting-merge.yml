@@ -15,7 +15,7 @@ jobs:
             node-version: [16.15.0, 18.x]
 
     steps:
-        - uses: actions/checkout@v3
+        - uses: actions/checkout@v2
         - name: Use Node.js ${{ matrix.node-version }}
         - run: npm run build
         - uses: FirebaseExtended/action-hosting-deploy@v0
