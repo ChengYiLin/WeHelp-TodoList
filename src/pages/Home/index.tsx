@@ -23,6 +23,23 @@ const Home: FC = () => {
             });
     };
 
+    const updateItem = (updateIndex: number, updateContent: string) => {
+        const newListData = [...JSON.parse(JSON.stringify(todoListData))];
+
+        newListData.splice(updateIndex, 1, updateContent);
+
+        fireStore
+            .setData(`todoList/martin`, {
+                lastUpdatedTime: new Date().toLocaleString(),
+                todoList: newListData,
+            })
+            .then(() => setTodoListData(newListData))
+            .catch((error) => {
+                alert("Update Error");
+                console.error(error);
+            });
+    };
+
     const deleteItem = (deleteIndex: number) => {
         const newListData = JSON.parse(JSON.stringify(todoListData));
         newListData.splice(deleteIndex, 1);
@@ -39,23 +56,28 @@ const Home: FC = () => {
             });
     };
 
+    const getListData = async () => {
+        const data = await fireStore.getDocument("todoList", "martin");
+
+        if (data) {
+            const { todoList } = data;
+            setTodoListData(todoList);
+        }
+    };
+
     useEffect(() => {
-        const getData = async () => {
-            const data = await fireStore.getDocument("todoList", "martin");
-
-            if (data) {
-                const { todoList } = data;
-                setTodoListData(todoList);
-            }
-        };
-
-        getData();
+        getListData();
     }, []);
 
     return (
         <div>
             <InputBar addItem={addItem} />
-            <TodoList data={todoListData} deleteItem={deleteItem} />
+            <TodoList
+                data={todoListData}
+                deleteItem={deleteItem}
+                getListData={getListData}
+                updateItem={updateItem}
+            />
         </div>
     );
 };

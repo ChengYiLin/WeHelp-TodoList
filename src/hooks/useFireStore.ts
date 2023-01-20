@@ -3,7 +3,6 @@ import {
     getDoc,
     collection,
     doc,
-    getFirestore,
     query,
     setDoc,
     WithFieldValue,
@@ -12,11 +11,9 @@ import {
 import { db } from "../lib/firebase/initialize";
 
 const useFireStore = () => {
-    const firestore = getFirestore();
-
     const getDocument = async (path: string, ...pathSegments: string[]) => {
         try {
-            const specificDoc = doc(firestore, path, ...pathSegments);
+            const specificDoc = doc(db, path, ...pathSegments);
 
             const result = await getDoc(specificDoc);
             console.info("FireStore : Get Document");
@@ -52,7 +49,7 @@ const useFireStore = () => {
         data: T
     ) => {
         try {
-            const specificDoc = doc(firestore, documentPath);
+            const specificDoc = doc(db, documentPath);
 
             await setDoc(specificDoc, data);
             console.info("FireStore : Set Document");
