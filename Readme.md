@@ -1,4 +1,4 @@
-# React TypeScript Webpack Template
+# TodoList with Firebase
 
 ## Primary Modules
 
@@ -10,6 +10,7 @@
 -   Webpack 5
 -   Eslint
 -   Prettier
+-   Firebase
 
 ## Develop
 
