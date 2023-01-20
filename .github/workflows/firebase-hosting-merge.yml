@@ -3,24 +3,22 @@
 
 name: Deploy to Firebase Hosting on merge
 "on":
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
+
 jobs:
-    build_and_deploy:
-        runs-on: ubuntu-latest
-
-    strategy:
-        matrix:
-            node-version: [16.15.0, 18.x]
-
+  build_and_deploy:
+    runs-on: ubuntu-latest
     steps:
-        - uses: actions/checkout@v2
-        - name: Use Node.js ${{ matrix.node-version }}
-        - run: npm run build
-        - uses: FirebaseExtended/action-hosting-deploy@v0
-          with:
-              repoToken: "${{ secrets.GITHUB_TOKEN }}"
-              firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_WEHELP_TODO }}"
-              channelId: live
-              projectId: wehelp-todo
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      - run: npm ci && npm run build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_WEHELP_TODO }}'
+          projectId: wehelp-todo
