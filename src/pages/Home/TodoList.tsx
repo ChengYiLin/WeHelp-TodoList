@@ -5,24 +5,17 @@ import {
     RiCloseLine,
     RiCheckLine,
 } from "react-icons/ri";
-
+import { useTodoList } from "../../context/TodoListContext";
 interface TodoItemProps {
     index: number;
     content: string;
-    deleteItem: (deleteIndex: number) => void;
-    updateItem: (updateIndex: number, updateContent: string) => void;
-    getListData: () => void;
 }
 
-const TodoItem: FC<TodoItemProps> = ({
-    index,
-    content,
-    deleteItem,
-    updateItem,
-    getListData,
-}) => {
+const TodoItem: FC<TodoItemProps> = ({ index, content }) => {
     const [isEdit, setIsEdit] = useState(false);
     const [editValue, setEditValue] = useState(content);
+
+    const { updateItem, deleteItem } = useTodoList();
 
     return (
         <div className="py-4 mb-2 border-b-2 flex items-center justify-between">
@@ -84,30 +77,19 @@ const TodoItem: FC<TodoItemProps> = ({
     );
 };
 
-interface TodoListProps {
-    data: string[];
-    deleteItem: (deleteIndex: number) => void;
-    updateItem: (updateIndex: number, updateContent: string) => void;
-    getListData: () => void;
-}
+interface TodoListProps {}
 
-const TodoList: FC<TodoListProps> = ({
-    data,
-    deleteItem,
-    updateItem,
-    getListData,
-}) => {
+const TodoList: FC<TodoListProps> = () => {
+    const { todoListData } = useTodoList();
+
     return (
         <div className="my-8 mx-4 max-w-[300px]">
-            {Array.isArray(data) &&
-                data.map((item, index) => (
+            {Array.isArray(todoListData) &&
+                todoListData.map((item, index) => (
                     <TodoItem
                         key={`${item}_${index}`}
                         index={index}
                         content={item}
-                        deleteItem={deleteItem}
-                        updateItem={updateItem}
-                        getListData={getListData}
                     />
                 ))}
         </div>

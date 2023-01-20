@@ -1,12 +1,13 @@
 import { FC, useState } from "react";
 import { MdAdd } from "react-icons/md";
+import { useTodoList } from "../../context/TodoListContext";
 
-interface Props {
-    addItem: (item: string) => void;
-}
+interface Props {}
 
-const InputBar: FC<Props> = ({ addItem }) => {
+const InputBar: FC<Props> = () => {
     const [inputText, setInputText] = useState("");
+
+    const { addItem } = useTodoList();
 
     const handleAddItem = () => {
         addItem(inputText);
